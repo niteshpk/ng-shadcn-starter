@@ -1,12 +1,25 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ThemeService } from './core/services/theme.service';
+import { ButtonComponent } from '@shared/components/ui/button/button.component';
 
 @Component({
+  standalone: true,
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  template: `
+    <div class="p-4">
+      <ui-button (click)="toggleDark()">Toggle Theme</ui-button>
+      <p class="mt-4">Current Theme Mode Active</p>
+    </div>
+  `,
+  imports: [ButtonComponent],
 })
 export class AppComponent {
-  title = 'ng-shadcn-starter';
+  private isDark = false;
+
+  constructor(private themeService: ThemeService) {}
+
+  toggleDark() {
+    this.isDark = !this.isDark;
+    this.themeService.toggleDarkTheme(this.isDark);
+  }
 }
